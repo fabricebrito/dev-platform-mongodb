@@ -132,3 +132,36 @@ Retrieve specific fields:
 ```javascript
 db.tutorial_collection.find({}, { name: 1, skills: 1, _id: 0 })
 ```
+
+### Python
+
+```python
+from pymongo import MongoClient
+
+# Replace the following with your MongoDB credentials and details
+username = "root"
+password = "***"
+host = "localhost"  # or your MongoDB server's hostname/IP
+port = 27017        # default MongoDB port
+database_name = "tutorial_db"
+
+# Build the connection string
+connection_string = f"mongodb://{username}:{password}@{host}:{port}/{database_name}"
+
+# Connect to MongoDB
+client = MongoClient(connection_string)
+
+# Access the database and collection
+db = client[database_name]
+collection = db["tutorial_collection"]
+
+# Insert a document
+collection.insert_one({"name": "Alice", "age": 30, "skills": ["Python", "MongoDB"]})
+
+# Query documents
+for doc in collection.find({"age": {"$gte": 30}}):
+    print(doc)
+
+# Close the connection
+client.close()
+```
