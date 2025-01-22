@@ -69,3 +69,66 @@ Install compass: https://www.mongodb.com/try/download/compass
 * Create a connection leaving the default connection string `mongodb://root:U4GtueGK1J@localhost:27017/`
 * In the **Advanced Connection Options**, **Authentication** tab, set the **Authentication Method** to **Username/Password**
 * Use the user `root` and the password printed by `skaffold dev` in the line starting with `mongodb-root-password`
+* Click **connect**
+
+## Short tutorial
+
+### Step 1: Open a shell on MongoDB
+
+Click **>_ Open MongoDB shell**
+
+### Step 2: Create a Database and Collection
+
+Use or create a new database:
+
+```javascript
+use tutorial_db
+```
+
+Create a collection (optional, as MongoDB auto-creates it on the first insert):
+
+```javascript
+db.createCollection("tutorial_collection")
+```
+
+### Step 3: Insert JSON Documents
+
+Insert one document:
+
+```javascript
+db.tutorial_collection.insertOne({
+  name: "Alice",
+  age: 30,
+  skills: ["Python", "MongoDB"],
+  isActive: true
+})
+```
+
+Insert multiple documents:
+
+```javascript
+db.tutorial_collection.insertMany([
+  { name: "Bob", age: 25, skills: ["Java", "Docker"], isActive: true },
+  { name: "Charlie", age: 35, skills: ["C++", "Linux"], isActive: false }
+])
+```
+
+### Step 4: Query the Data
+
+Retrieve all documents:
+
+```javascript
+db.tutorial_collection.find()
+```
+
+Filter documents by criteria (e.g., age > 30):
+
+```javascript
+db.tutorial_collection.find({ age: { $gt: 30 } })
+```
+
+Retrieve specific fields:
+
+```javascript
+db.tutorial_collection.find({}, { name: 1, skills: 1, _id: 0 })
+```
