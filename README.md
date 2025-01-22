@@ -1,6 +1,10 @@
 # dev-platform-mongodb
 
-Use `skaffold dev` to deploy mongodb
+Use `skaffold dev` to deploy mongodb.
+
+This deploys mongodb from oci://registry-1.docker.io/bitnamicharts/mongodb and exposes with a port-forward the mongodb on `mongodb://root:U4GtueGK1J@localhost:27017/`
+
+For coding experiments, access the code server pod on 
 
 This prints:
 
@@ -141,13 +145,15 @@ from pymongo import MongoClient
 # Replace the following with your MongoDB credentials and details
 username = "root"
 password = "***"
-host = "localhost"  # or your MongoDB server's hostname/IP
+host = "mongodb"  # or your MongoDB server's hostname/IP
 port = 27017        # default MongoDB port
 database_name = "tutorial_db"
 
 # Build the connection string
-connection_string = f"mongodb://{username}:{password}@{host}:{port}/{database_name}"
+connection_string = f"mongodb://{username}:{password}@{host}:{port}"
+```
 
+```python
 # Connect to MongoDB
 client = MongoClient(connection_string)
 
@@ -156,7 +162,7 @@ db = client[database_name]
 collection = db["tutorial_collection"]
 
 # Insert a document
-collection.insert_one({"name": "Alice", "age": 30, "skills": ["Python", "MongoDB"]})
+collection.insert_one({"name": "Fabrice", "age": 30, "skills": ["Python", "MongoDB"]})
 
 # Query documents
 for doc in collection.find({"age": {"$gte": 30}}):
