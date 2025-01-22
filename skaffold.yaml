@@ -1,0 +1,31 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: mongodb
+manifests:
+  rawYaml: []
+
+deploy:
+  helm:
+    
+    releases:
+      - name: mongodb
+        #repo: oci://registry-1.docker.io/bitnamicharts/mongodb
+        remoteChart: oci://registry-1.docker.io/bitnamicharts/mongodb
+        namespace: mongodb
+        createNamespace: true
+        wait: true
+        setValues:
+          architecture: standalone
+    hooks:
+      after:
+        - host:
+            command: ["sh", "-c", "./get-secret.sh"]
+            os: [darwin, linux]
+
+portForward:
+- resourceType: service
+  resourceName: mongodb
+  namespace: mongodb
+  port: 27017
+  localPort: 27017
